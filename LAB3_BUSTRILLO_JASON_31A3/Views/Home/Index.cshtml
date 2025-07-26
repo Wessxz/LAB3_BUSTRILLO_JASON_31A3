@@ -1,0 +1,65 @@
+﻿@using LAB3_BUSTRILLO_JASON_31A3.Models
+@{
+    ViewData["Title"] = "Customer List";
+
+    var allCustomers = new List<BaseEntityCustomer>
+    {
+        new Customers { Id = 1, FullName = "Juan Dela Cruz", Age = 25 },
+        new Customers { Id = 2, FullName = "Maria Santos", Age = 31 },
+        new Customers { Id = 3, FullName = "Pedro Reyes", Age = 40 },
+        new Customers { Id = 4, FullName = "Anna Lopez", Age = 22 },
+        new Customers { Id = 5, FullName = "Marco Ramos", Age = 28 },
+
+        new PremiumCustomer { Id = 6, FullName = "VIP: Sarah Geronimo", Age = 35 },
+        new PremiumCustomer { Id = 7, FullName = "VIP: Daniel Padilla", Age = 29 },
+        new PremiumCustomer { Id = 8, FullName = "VIP: Kathryn Bernardo", Age = 27 },
+        new PremiumCustomer { Id = 9, FullName = "VIP: Piolo Pascual", Age = 43 },
+        new PremiumCustomer { Id = 10, FullName = "VIP: Liza Soberano", Age = 26 }
+    };
+}
+
+<!-- Bootstrap 5 CDN -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Customer List</h2>
+
+    @if (allCustomers.Any())
+    {
+        <table class="table table-sm table-striped text-center">
+            <thead class="table-light">
+                <tr>
+                    <th>Customer ID</th>
+                    <th>Full Name</th>
+                    <th>Age</th>
+                    <th>Is VIP?</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var c in allCustomers)
+                {
+                    bool isVip = c is PremiumCustomer vip && vip.IsVIP;
+                    <tr>
+                        <td>@c.Id</td>
+                        <td>@c.FullName</td>
+                        <td>@c.Age</td>
+                        <td>
+                            @if (isVip)
+                            {
+                                <span class="badge bg-success">Yes</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">No</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info text-center">No customers found.</div>
+    }
+</div>
